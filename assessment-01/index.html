@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding JavaScript to HTML</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Adding JavaScript to HTML</h1>
+    </header>
+    <main>
+        <p id="sample">
+            This paragraph has an ID of sample
+        </p>
+        <button type="button" onclick='document.getElementById("sample").innerHTML = "Jyotsna Agrawal" '>Click here!</button>
+        <div class="buttons">
+            <button onclick="document.getElementById('flower').src='images/Cheer.jpg'">Cheer Flower
+            </button>
+            <button onclick="document.getElementById('flower').src='images/spring.jpg'">Spring Flower</button>
+            <button onclick="document.getElementById('flower').src='images/lilies.jpg'">Lilies Flower</button>
+        </div>
+
+        <img src="images/cheer.jpg" alt="Cheer Flower" id="flower" class="center">
+        
+        <div class="buttons">
+            <button type="button" onclick='document.getElementById("flower").style.width = "900px"; '>Bigger</button>
+            <button onclick="document.getElementById('flower').style.display='block'">show</button>
+            <button onclick="document.getElementById('flower').style.display='none'">hide</button>
+        </div>
+
+        <div id="output">
+            <h2>Output</h2>
+        </div>
+    </main>
+    <footer>
+        <p>&copy;2023 Jyotsna Agrawal</p>
+    </footer>
+</body>
+
+</html>
