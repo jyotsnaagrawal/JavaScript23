@@ -1,0 +1,38 @@
+{
+	"enableStatusBarItem": true,
+	"enableQuickPick": false,
+	"uploadOnSave": true,
+	"autoDelete": true,
+	"checkGitignore": false,
+	"activeTargets": [
+		"My FTP"
+	],
+	"concurrency": 5,
+	"ignore": [
+		".git/**/*",
+		".vscode/**/*"
+	],
+	"targets": [
+		{
+			"name": "My FTP",
+			"type": "ftp",
+			"host": "jagrawal.mccweb.net",
+			"port": 21,
+			"user": "jagrawal",
+			"password": "Jyotsna@27",
+			"dir": "/public_html",
+			"transferDataType": "binary"
+		},
+		{
+			"name": "My SFTP",
+			"type": "sftp",
+			"host": "jagrawal.mccweb.net",
+			"port": 22,
+			"user": "jagrawal",
+			"password": "Jyotsna@27",
+			"dir": "/public_html",
+			"privateKey": null,
+			"passphrase": null
+		}
+	]
+}

@@ -1,0 +1,7 @@
+Jyotsna
+ChangeImage
+onclick
+getElementById
+innerHTML
+img
+&copy
