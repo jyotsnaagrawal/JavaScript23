@@ -184,8 +184,8 @@ div {
 footer {
     text-align: center;
     padding: 20px;
-    background: var(--primary);
-    color: var(--text-light);
+    background: palevioletred;
+    color: var(--text-dark);
 }
 
 .left {
@@ -214,9 +214,10 @@ img {
 
 header {
     background: var(--secondary-dark);
-    color: var(--text-light);
+    color: var(--text-dark);
     min-height: 80px;
     text-align: center;
+    font-weight: bolder;
 }
 
 nav {
