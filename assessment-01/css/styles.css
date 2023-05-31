@@ -213,7 +213,7 @@ img {
 }
 
 header {
-    background: var(--primary);
+    background: var(--secondary-dark);
     color: var(--text-light);
     min-height: 80px;
     text-align: center;
