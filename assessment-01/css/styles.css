@@ -239,7 +239,7 @@ h2 {
 }
 
 .buttons {
-    width: 50%;
+    width: 90%;
     margin: 20px auto;
     text-align: center;
  
@@ -251,7 +251,7 @@ button {
     border: 10px solid var(--text-light);
     background: var(--secondary-dark);
     text-decoration: chartreuse;
-    width: 90px;
+    width: 200px;
     font-weight: bolder;
     font-size: large;
 }

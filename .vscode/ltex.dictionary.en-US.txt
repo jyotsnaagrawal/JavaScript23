@@ -5,3 +5,4 @@ getElementById
 innerHTML
 img
 &copy
+myFunction

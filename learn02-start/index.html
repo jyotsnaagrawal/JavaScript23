@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adding JavaScript to HTML</title>
+    <script>
+        function myFunction(){
+            document.getElementById("sample").innerHTML = "Changed from a function in the head section"
+        }
+    </script>
+    <script src=scripts/script.js></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -14,26 +20,47 @@
         <h1>Adding JavaScript to HTML</h1>
     </header>
     <main>
+        <button type="button" onclick = "myFunction()">Call Function in head section</button>
+        <button type="button" onclick = "myFunction2()">Call Function in External script</button>
+          <p id="start"> </p>
+        <script>
+            document.getElementById("start").innerHTML = "JavaScript inside the script tag."
+        </script>
         <p id="sample">
             This paragraph has an ID of sample
         </p>
+        <button type="button" onclick='document.getElementById("sample").innerHTML = "Jyotsna Agrawal" '>Click here!</button>
         <div class="buttons">
-            <button>dog</button>
-            <button>cat</button>
+            <button onclick="document.getElementById('flower').src='images/Cheer.jpg'">Cheer Flower
+            </button>
+            <button onclick="document.getElementById('flower').src='images/spring.jpg'">Spring Flower</button>
+            <button onclick="document.getElementById('flower').src='images/lilies.jpg'">Lilies Flower</button>
         </div>
 
-        <img src="images/dog.jpg" alt="animal" id="pet" class="center">
+        <img src="images/cheer.jpg" alt="Cheer Flower" id="flower" class="center">
+        
         <div class="buttons">
-            <button>show</button>
-            <button>hide</button>
+            <button type="button" onclick='document.getElementById("flower").style.width = "900px"; '>Bigger</button>
+            <button onclick="document.getElementById('flower').style.display='block'">show</button>
+            <button onclick="document.getElementById('flower').style.display='none'">hide</button>
         </div>
-
-        <div id="output">
+        <div id = "output">
             <h2>Output</h2>
+            <script>
+                document.write("document.write");
+            </script>
+            <p id="clear"></p>
+            <button onclick='document.write("clear")'>All Cleared</button>
+            <script>
+                alert("wow, This is an alert")
+            </script>
+           <script>
+            console.log("This is my log")
+           </script>
         </div>
     </main>
     <footer>
-        <p>&copy;2022 Meri Engel</p>
+        <p>&copy; Jyotsna Agrawal </p>
     </footer>
 </body>
 
