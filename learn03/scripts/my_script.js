@@ -61,18 +61,95 @@ function constants() {
 
 function myMath() {
     // create statements demonstrating the use of each operator
+    // Addition
+    let x = 105 + 250;
+    document.getElementById("addition").innerHTML = "let x = 105 + 250 = "
+        + x;
+    // Subtracting
+    let a = 5;
+    let b = 2;
+    let c = a - b;
+    document.getElementById("subtraction").innerHTML = "let a = 5" + "<br></br>" + "let b = 2" +
+        "<br></br>" + "let c = a - b" + " = " + c;
+    //Multiplying
+    let x1 = 5;
+    let y1 = 2;
+    let z1 = x1 * y1;
+document.getElementById("multiplication").innerHTML = "let x1 = 5" + "<br></br>" + "let y1 = 2" +
+        "<br></br>" + "let z1 = x1 * y1" + " = " + z1;
+    //Exponentiation
+    let x2 = 5;
+    document.getElementById("exponent").innerHTML = "let x2 = 5" + "<br></br>" + " x2 ** 2 = " + x2 ** 2;
+    //Dividing
+    let x3 = 5;
+let y3 = 2;
+let z3 = x3 / y3;
+document.getElementById("division").innerHTML = "let x3 = 5" + "<br></br>" + "let y3 = 2" +
+        "<br></br>" + "let z3 = x3 / y3" + " = " + z3;
+    //Remainder( OR modulus)
+    let x4 = 5;
+let y4 = 2;
+let z4 = x4 % y4;
+document.getElementById("modulus").innerHTML = "let x4 = 5" + "<br></br>" + "let y4 = 2" +
+        "<br></br>" + "let z4 = x4 % y4" + " = " + z4;
+    //Incrementing
+    let a1 = 5;
+a1++;
+let c1 = a1;
+document.getElementById("increment").innerHTML ="let a1 = 5" +  "<br></br>" + "a1++;" + "<br></br>"
+
+        + "let c1 = a1" + "<br></br>" + "c1 = " + c1;
+    //Decrementing
+    let a2 = 5;
+a2--;
+let c2 = a2;
+document.getElementById("decrement").innerHTML ="let a2 = 5" +  "<br></br>" + "a2--;" + "<br></br>"
+
++ "let c2 = a2" + "<br></br>" +"c2 = "+ c2;
 }
 
 function assignments() {
     // create statements demonstrating the use of each assignment type
     x = 10
-    document.getElementById("equals").innerHTML = "x = 10" + "x = " + x;
-    document.getElementById("plus_equals").innerHTML = "x += 1" + "x = " + x;
+    document.getElementById("equals").innerHTML = "x = 10" + " = " + x;
+    //Addition Assignment
+     x = 10
+    x += 5;
+    document.getElementById("plus-equals").innerHTML = "x = 10" + " x += 5"+ " = " + x;
+    //Subtraction Assignment
+     x = 10
+    x -= 5;
+    document.getElementById("minus-equals").innerHTML = "x = 10" + " x -= 5"+ " = " + x;
+    //Multiply Assignment
+     x = 10
+    x *= 5;
+    document.getElementById("times-equals").innerHTML = "x = 10" + " x *= 5"+ " = " + x;
+    //Division Assignment Operator
+    x = 10
+    x /= 5;
+    document.getElementById("divide-equals").innerHTML = "x = 10" + " x /= 5"+ " = " + x;
+    //Remainder Assignment Operator 
+    x = 10
+    x %= 5;
+    document.getElementById("modulus-equals").innerHTML = "x = 10" + " x %= 5"+ " = " + x;
 }
 
 function dataTypes() {
     // create samples of each of the data types from the
     // index page and display them in the Data Types section
-    ;
+    //Array
+    const cars = ["Audi","Cameri","BMW"];
+
+    document.getElementById("array").innerHTML = cars;
+    //Object
+    const person = {
+  firstName : "Jyo",
+  lastName  : "Argawal",
+  age     : 34,
+  eyeColor  : "blue"
+};
+
+document.getElementById("object").innerHTML =
+person.firstName + " is " + person.age + " years old.";
 
 }
