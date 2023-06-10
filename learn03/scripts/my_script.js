@@ -51,10 +51,12 @@ function constants() {
     // fix the errors
     const PI = 3.14;
     const dogs = ["Ollie", "Nessie", "Ory"];
-    dogs[0] = "Ollie Bear";
-    dogs = ["Shepherd", "Collie", "Bouvier"];
-    document.getElementById("pi").innerHTML = PI;
     document.getElementById("doggos").innerHTML = dogs;
+    dogs[0] = "Ollie Bear";
+    document.getElementById("new-doggos").innerHTML = dogs;
+    const breed = ["Shepherd", "Collie", "Bouvier"];
+    document.getElementById("pi").innerHTML = PI;
+    document.getElementById("breeds").innerHTML = breed;
 }
 
 function myMath() {
