@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Order Form</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Food Order Form</h1>
+  </header>
+  <main class="container">
+    <form id="orderForm">
+      <h2>Drinks</h2>
+      <div class="section">
+        <label for="drink1">Hot Chocolate:</label>
+        <input type="number" id="drink1Quantity" name="drink1Quantity" min="0" value="0">
+        <input type="text" id="drink1Price" name="drink1Price" placeholder="Price" value="$10.0" readonly>
+      </div>
+      <div class="section">
+        <label for="drink2">Smoothie:</label>
+        <input type="number" id="drink2Quantity" name="drink2Quantity" min="0" value="0">
+        <input type="text" id="drink2Price" name="drink2Price" placeholder="Price" value="$5.0" readonly>
+      </div>
+      <div class="section">
+        <label for="drink3">Cocktail:</label>
+        <input type="number" id="drink3Quantity" name="drink3Quantity" min="0" value="0">
+        <input type="text" id="drink3Price" name="drink3Price" placeholder="Price" value="$6.0" readonly>
+      </div>
+      <div class="section">
+        <label for="drink4">Soda:</label>
+        <input type="number" id="drink4Quantity" name="drink4Quantity" min="0" value="0">
+        <input type="text" id="drink4Price" name="drink4Price" placeholder="Price" value="$12.0" readonly>
+      </div>
+      <div class="section">
+        <label for="drink5">Mineral Water:</label>
+        <input type="number" id="drink5Quantity" name="drink5Quantity" min="0" value="0">
+        <input type="text" id="drink5Price" name="drink5Price" placeholder="Price" value="$2.4" readonly>
+      </div>
+
+      <h2>Sandwiches</h2>
+      <div class="section">
+        <label for="sandwich1">Paneer Tikka Masala Sandwich :</label>
+        <input type="number" id="sandwich1Quantity" name="sandwich1Quantity" min="0" value="0">
+        <input type="text" id="sandwich1Price" name="sandwich1Price" placeholder="Price" value="$12.2" readonly>
+      </div>
+      <div class="section">
+        <label for="sandwich2">Vegetables Sandwich:</label>
+        <input type="number" id="sandwich2Quantity" name="sandwich2Quantity" min="0" value="0">
+        <input type="text" id="sandwich2Price" name="sandwich2Price" placeholder="Price" value="$1.3" readonly>
+      </div>
+      <div class="section">
+        <label for="sandwich3">Chicken-tikka Sandwich:</label>
+        <input type="number" id="sandwich3Quantity" name="sandwich3Quantity" min="0" value="0">
+        <input type="text" id="sandwich3Price" name="sandwich3Price" placeholder="Price" value="$12.0" readonly>
+      </div>
+      <div class="section">
+        <label for="sandwich4">Cheese Sandwich:</label>
+        <input type="number" id="sandwich4Quantity" name="sandwich4Quantity" min="0" value="0">
+        <input type="text" id="sandwich4Price" name="sandwich4Price" placeholder="Price" value="$12.0" readonly>
+      </div>
+      <div class="section">
+        <label for="sandwich5">Cheese Masala Sandwich:</label>
+        <input type="number" id="sandwich5Quantity" name="sandwich5Quantity" min="0" value="0">
+        <input type="text" id="sandwich5Price" name="sandwich5Price" placeholder="Price" value="$12.0" readonly>
+      </div>
+
+      <h2>Deserts/Sides</h2>
+      <div class="section">
+        <label for="desert1">Browny:</label>
+        <input type="number" id="desert1Quantity" name="desert1Quantity" min="0" value="0">
+        <input type="text" id="desert1Price" name="desert1Price" placeholder="Price" value="$12.0" readonly>
+      </div>
+      <div class="section">
+        <label for="desert2">Dark Choco-Cake:</label>
+        <input type="number" id="desert2Quantity" name="desert2Quantity" min="0" value="0">
+        <input type="text" id="desert2Price" name="desert2Price" placeholder="Price" value="$12.0" readonly>
+      </div>
+      <div class="section">
+        <label for="desert3">Gulaab-Jamun:</label>
+        <input type="number" id="desert3Quantity" name="desert3Quantity" min="0" value="0">
+        <input type="text" id="desert3Price" name="desert3Price" placeholder="Price" value="$12.0" readonly>
+      </div>
+      <div class="section">
+        <label for="desert4">Rasmalai:</label>
+        <input type="number" id="desert4Quantity" name="desert4Quantity" min="0" value="0" >
+        <input type="text" id="desert4Price" name="desert4Price" placeholder="Price"value="$12.0" readonly>
+      </div>
+      <div class="section">
+        <label for="desert5">Cheese-Cake:</label>
+        <input type="number" id="desert5Quantity" name="desert5Quantity" min="0" value="0">
+        <input type="text" id="desert5Price" name="desert5Price" placeholder="Price" value="$12.0" readonly>
+      </div>
+
+      <h2>Customer Information</h2>
+      <div class="section">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+      </div>
+
+      <button type="button" onclick="calculateOrder()">Submit</button>
+    </form>
+
+    <div id="summary">
+      <h2>Order Summary</h2>
+      <div id="drinksSummary"></div>
+      <div id="sandwichesSummary"></div>
+      <div id="desertsSummary"></div>
+      <hr>
+      <h3>Total Cost: <span id="totalCost"></span></h3>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; Jyotsna Agrawal</p>
+  </footer>
+  <script src="scripts/calculate.js"></script>
+</body>
+</html>
