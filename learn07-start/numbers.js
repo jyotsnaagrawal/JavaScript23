@@ -1,5 +1,5 @@
 function start() {
-    document.getElementById("name").innerHTML = "Your Name Here";
+    document.getElementById("name").innerHTML = "Jyotsna Agrawal";
 
     // Task 1: Adding a number and a string
     let number = 10;
