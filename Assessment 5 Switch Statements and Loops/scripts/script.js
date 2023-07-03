@@ -10,7 +10,7 @@ const holidaysByMonth = {
     August: ["International Youth Day", "World Humanitarian Day"],
     September: ["Labor Day", "International Day of Peace"],
     October: ["Halloween", "World Food Day"],
-    November: ["Thanksgiving Day", "Veterans Day"],
+    November: ["Thanksgiving ", "Veterans Day"],
     December: ["Christmas Day", "New Year's Eve"],
 };
 
