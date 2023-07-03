@@ -4,7 +4,7 @@ const holidaysByMonth = {
     February: ["Presidents' Day", "Valentine's Day"],
     March: ["St. Patrick's Day", "International Women's Day"],
     April: ["April Fools' Day", "Earth Day"],
-    May: ["May Day", "Cinco de Mayo"],
+    May: ["May Day"],
     June: ["Father's Day", "World Environment Day"],
     July: ["Independence Day", "World Population Day"],
     August: ["International Youth Day", "World Humanitarian Day"],
