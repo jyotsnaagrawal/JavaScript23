@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expenses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 30px;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .container form {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .container input[type="text"],
+        .container input[type="number"],
+        .container input[type="date"],
+        .container select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .container button[type="submit"],
+        .container button[type="button"] {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .container button[type="submit"]:hover,
+        .container button[type="button"]:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 680px) {
+            .container form {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+  <h1>Add Expenses</h1>
+  <div class="container">
+    <form onsubmit="saveExpense(event)">
+      <label for="selectedGroup">Selected Group:</label>
+      <input type="text" id="selectedGroup" name="selectedGroup" value="" readonly>
+
+      <label for="datePicker">Select Date:</label>
+      <input type="date" id="datePicker" name="date" required>
+
+      <label for="expenseNameInput">Expense Name:</label>
+      <input type="text" id="expenseNameInput" name="expenseName" placeholder="Enter expense name" required>
+
+      <label for="expenseAmountInput">Expense Amount:</label>
+      <input type="number" id="expenseAmountInput" name="expenseAmount" placeholder="Enter expense amount" required>
+
+      <label for="paidByInput">Paid By:</label>
+      <select id="paidByInput" name="paidBy" multiple required>
+        <!-- Group members options will be added dynamically -->
+      </select>
+
+      <label for="involvedInput">Persons Involved:</label>
+      <select id="involvedInput" name="involved[]" multiple required>
+        <!-- Group members options will be added dynamically -->
+      </select>
+
+      <button type="submit">Save</button>
+      <button type="button" onclick="goBack()">Back</button>
+    </form>
+  </div>
+
+  <script>
+    // Retrieve the stored group names from local storage
+    const storedGroupNames = JSON.parse(localStorage.getItem("groupNames")) || [];
+
+    // Retrieve the selected group name from local storage
+    const selectedGroupName = localStorage.getItem("selectedGroupName");
+
+    // Find the selected group object from the stored group names
+    const selectedGroup = storedGroupNames.find(group => group.name === selectedGroupName);
+
+    // Populate the selected group name
+    const selectedGroupInput = document.getElementById("selectedGroup");
+    selectedGroupInput.value = selectedGroupName;
+
+    // Retrieve the members of the selected group
+    const selectedGroupMembers = selectedGroup ? selectedGroup.persons : [];
+
+    // Populate the "Paid By" and "Persons Involved" dropdowns
+    const paidByInput = document.getElementById("paidByInput");
+    const involvedInput = document.getElementById("involvedInput");
+
+    // Populate the "Paid By" dropdown
+    for (const member of selectedGroupMembers) {
+      const option = document.createElement("option");
+      option.value = member;
+      option.textContent = member;
+      paidByInput.appendChild(option);
+    }
+
+    // Populate the "Persons Involved" dropdown
+    for (const member of selectedGroupMembers) {
+      const option = document.createElement("option");
+      option.value = member;
+      option.textContent = member;
+      involvedInput.appendChild(option);
+    }
+
+    // Function to save the expense
+    function saveExpense(event) {
+      event.preventDefault();
+
+      // Retrieve the form input values
+      const date = document.getElementById("datePicker").value;
+      const expenseName = document.getElementById("expenseNameInput").value;
+      const expenseAmount = document.getElementById("expenseAmountInput").value;
+      const paidByOptions = document.getElementById("paidByInput").options;
+      const involvedOptions = document.getElementById("involvedInput").options;
+
+      // Retrieve the selected "Paid By" members
+      const paidByPersons = Array.from(paidByOptions)
+        .filter(option => option.selected)
+        .map(option => option.value);
+
+      // Retrieve the selected "Persons Involved"
+      const involvedPersons = Array.from(involvedOptions)
+        .filter(option => option.selected)
+        .map(option => option.value);
+
+      // Create an object to store the expense data
+      const expense = {
+        date: date,
+        name: expenseName,
+        amount: expenseAmount,
+        paidBy: paidByPersons,
+        involvedPersons: involvedPersons
+      };
+
+      // Retrieve the stored expenses from local storage
+      const storedExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+      // Add the new expense to the array of expenses
+      storedExpenses.push(expense);
+
+      // Store the updated expenses array in local storage
+      localStorage.setItem("expenses", JSON.stringify(storedExpenses));
+
+      // Perform calculations for equal split among involved persons
+      const equalSplitAmount = expenseAmount / involvedPersons.length;
+
+      // Display a success message
+      const message = `Expense for ${date} with name '${expenseName}' and amount '${expenseAmount}' has been saved.`;
+      alert(message);
+
+      // Reset the form
+      document.getElementById("datePicker").value = "";
+      document.getElementById("expenseNameInput").value = "";
+      document.getElementById("expenseAmountInput").value = "";
+      for (let i = 0; i < paidByOptions.length; i++) {
+        paidByOptions[i].selected = false;
+      }
+      for (let i = 0; i < involvedOptions.length; i++) {
+        involvedOptions[i].selected = false;
+      }
+    }
+
+    // Function to navigate back to the previous page
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+
+</html>

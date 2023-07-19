@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Group</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 50px;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .container input {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .container button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #messageBox {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Create New Group</h1>
+    <div class="container">
+        <label for="groupNameInput">My group name is:</label>
+        <input type="text" id="groupNameInput" placeholder="Enter group name">
+        <button onclick="saveGroup()">Save</button>
+    </div>
+
+    <div id="messageBox">
+        <p id="groupCreatedMessage"></p>
+    </div>
+
+    <script>
+        function saveGroup() {
+            var groupNameInput = document.getElementById("groupNameInput");
+            var groupName = groupNameInput.value;
+
+            // Retrieve the stored group names from local storage
+            var storedGroupNames = JSON.parse(localStorage.getItem("groupNames")) || [];
+
+            // Check if the group name already exists
+            var groupExists = storedGroupNames.some(function (group) {
+                return group.name === groupName;
+            });
+
+            if (groupExists) {
+                alert("Group name already exists. Please choose a different name.");
+                return;
+            }
+
+            // Add the new group name to the array of group names
+            storedGroupNames.push({ name: groupName, persons: [] });
+
+            // Store the updated group names array in local storage
+            localStorage.setItem("groupNames", JSON.stringify(storedGroupNames));
+
+            // Display the message box
+            var messageBox = document.getElementById("messageBox");
+            var groupCreatedMessage = document.getElementById("groupCreatedMessage");
+            groupCreatedMessage.textContent = "Group with name '" + groupName + "' has been created.";
+            messageBox.style.display = "block";
+
+            // Clear the input field
+            groupNameInput.value = "";
+
+            // Show a message if the user is the only member
+            if (storedGroupNames.length === 1) {
+                alert("You are the only member in this group!");
+            }
+
+            // Show buttons to add members or exit
+            var buttonContainer = document.createElement("div");
+            buttonContainer.style.marginTop = "20px";
+
+            var addButton = document.createElement("button");
+            addButton.textContent = "Add Members to Group";
+            addButton.addEventListener("click", function () {
+                // Navigate to add members page
+                window.location.href = "add_members.html";
+            });
+
+            var cancelButton = document.createElement("button");
+            cancelButton.textContent = "Cancel";
+            cancelButton.addEventListener("click", function () {
+                // Navigate back to the previous page
+                window.history.back();
+            });
+
+            buttonContainer.appendChild(addButton);
+            buttonContainer.appendChild(cancelButton);
+
+            document.body.appendChild(buttonContainer);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Recipe Finder</title>
+</head>
+<body>
+  <h1>Recipe Finder</h1>
+  
+  <div>
+    <label for="ingredients">Search by Ingredients:</label>
+    <input type="text" id="ingredients" placeholder="Enter ingredients">
+    <button id="searchIngredients">Search</button>
+  </div>
+  
+  <div>
+    <label for="diet">Search by Dietary Preferences:</label>
+    <select id="diet">
+      <option value="">All</option>
+      <option value="vegetarian">Vegetarian</option>
+      <option value="vegan">Vegan</option>
+      <option value="gluten-free">Gluten-free</option>
+    </select>
+    <button id="searchDiet">Search</button>
+  </div>
+  
+  <div id="results"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Group List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            cursor: pointer;
+            text-decoration: underline;
+            color: #0066cc;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        li:hover {
+            color: #003399;
+        }
+
+        .button-container {
+            display: none;
+            margin-top: 20px;
+            transition: opacity 0.5s ease;
+        }
+
+        .active .button-container {
+            display: block;
+        }
+
+        .button-container button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Manage Group List</h1>
+    <ul id="groupList"></ul>
+
+    <div id="buttonContainer" class="button-container">
+        <button onclick="addPerson()">Add Person</button>
+        <button onclick="goToAddExpenses()">Add Expenses</button>
+        <button>To be Paid</button>
+    </div>
+
+    <script>
+        var selectedGroupName = null;
+
+        function populateListbox() {
+            var groupList = document.getElementById("groupList");
+            groupList.innerHTML = "";
+
+            // Retrieve the stored group names from local storage
+            var storedGroupNames = JSON.parse(localStorage.getItem("groupNames"));
+
+            if (storedGroupNames && storedGroupNames.length > 0) {
+                storedGroupNames.forEach(function (group) {
+                    var li = document.createElement("li");
+                    li.textContent = group.name;
+                    li.addEventListener("click", function () {
+                        toggleButtons(li, group.name);
+                    });
+                    groupList.appendChild(li);
+                });
+            } else {
+                var li = document.createElement("li");
+                li.textContent = "No groups found.";
+                groupList.appendChild(li);
+            }
+        }
+
+        function toggleButtons(selectedItem, groupName) {
+                var groupItems = document.getElementsByTagName("li");
+
+                for (var i = 0; i < groupItems.length; i++) {
+                    groupItems[i].classList.remove("active");
+                }
+
+                selectedItem.classList.add("active");
+                selectedGroupName = groupName;
+
+                var buttonContainer = document.getElementById("buttonContainer");
+
+                if (selectedItem.classList.contains("active")) {
+                    buttonContainer.style.display = "block";
+                } else {
+                    buttonContainer.style.display = "none";
+                }
+
+                // Retrieve the stored group names from local storage
+                var storedGroupNames = JSON.parse(localStorage.getItem("groupNames"));
+
+                // Find the selected group object from the stored group names
+                var selectedGroup = storedGroupNames.find(function (group) {
+                    return group.name === selectedGroupName;
+                });
+
+                // Retrieve the member list for the selected group
+                var members = selectedGroup ? selectedGroup.persons : [];
+
+                // Retrieve the dropdowns for paidBy and involvedInput
+                var paidByInput = document.getElementById("paidByInput");
+                var involvedInput = document.getElementById("involvedInput");
+
+                // Clear the existing options
+                paidByInput.innerHTML = "";
+                involvedInput.innerHTML = "";
+
+                // Populate the dropdowns with the member list
+                members.forEach(function (member) {
+                    var option = document.createElement("option");
+                    option.value = member;
+                    option.textContent = member;
+                    paidByInput.appendChild(option);
+                    involvedInput.appendChild(option.cloneNode(true));
+                });
+            }
+
+
+ function addPerson() {
+        if (!selectedGroupName) {
+            alert("Please select a group first.");
+            return;
+        }
+
+        // Redirect to the Add Members page with the selected group name as a query parameter
+        window.location.href = "add_members.html?group=" + encodeURIComponent(selectedGroupName);
+    }
+
+
+
+            var personName = prompt("Enter person's name");
+            if (personName) {
+                // Retrieve the stored group names from local storage
+                var storedGroupNames = JSON.parse(localStorage.getItem("groupNames"));
+
+                // Find the selected group name in the stored group names
+                var selectedGroup = storedGroupNames.find(function (group) {
+                    return group.name === selectedGroupName;
+                });
+
+                if (selectedGroup) {
+                    // Add the person's name to the selected group's persons array
+                    selectedGroup.persons.push(personName);
+
+                    // Update the stored group names in local storage
+                    localStorage.setItem("groupNames", JSON.stringify(storedGroupNames));
+
+                    // Refresh the group list to reflect the added person
+                    populateListbox();
+                }
+            }
+        
+
+        function goToAddExpenses() {
+            if (!selectedGroupName) {
+                alert("Please select a group first.");
+                return;
+            }
+
+            window.location.href = "add_expenses.html";
+        }
+
+        // Populate the listbox with group names
+        populateListbox();
+    </script>
+
+    <script>
+        function modifyGroupName() {
+            if (!selectedGroupName) {
+                alert("Please select a group first.");
+                return;
+            }
+
+            var newGroupName = prompt("Enter new group name");
+            if (newGroupName) {
+                // Retrieve the stored group names from local storage
+                var storedGroupNames = JSON.parse(localStorage.getItem("groupNames"));
+
+                // Find the selected group name in the stored group names
+                var selectedGroup = storedGroupNames.find(function (group) {
+                    return group.name === selectedGroupName;
+                });
+
+                if (selectedGroup) {
+                    // Update the group name
+                    selectedGroup.name = newGroupName;
+
+                    // Update the stored group names in local storage
+                    localStorage.setItem("groupNames", JSON.stringify(storedGroupNames));
+
+                    // Refresh the group list to reflect the modified group name
+                    populateListbox();
+                }
+            }
+        }
+
+        function deleteGroupName() {
+            if (!selectedGroupName) {
+                alert("Please select a group first.");
+                return;
+            }
+
+            var confirmDelete = confirm("Are you sure you want to delete the group?");
+            if (confirmDelete) {
+                // Retrieve the stored group names from local storage
+                var storedGroupNames = JSON.parse(localStorage.getItem("groupNames"));
+
+                // Filter out the selected group name from the stored group names
+                var updatedGroupNames = storedGroupNames.filter(function (group) {
+                    return group.name !== selectedGroupName;
+                });
+
+                // Update the stored group names in local storage
+                localStorage.setItem("groupNames", JSON.stringify(updatedGroupNames));
+
+                // Clear the selected group name and refresh the group list
+                selectedGroupName = null;
+                populateListbox();
+            }
+        }
+    </script>
+</body>
+
+</html>

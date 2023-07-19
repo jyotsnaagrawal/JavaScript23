@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="./FontAwesome files/fontawesome.css" />
+  <script src="./FontAwesome files/fontawesome.js"></script>
+  <title>My Expense Buddy</title>
+
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="../images/logo.png" alt="Logo" style="width: 120px; height: 130px;">
+      <span class="fab fa-github"></span>
+      <h1>My Expense Buddy</h1>
+    </div>
+    <span class="fas fa-bars" id="menuIcon" onclick="toggle()"></span>
+    <div class="navbar" id="nav">
+      
+      <ul>
+        <li>
+          <span class="fas fa-home" id="headIcon"></span>
+          <a href="../index.html"> Home </a>
+        </li>
+          <li>
+            <span class="fas fa-sign-out" id="headIcon"></span>
+            <a href="../pages/login.html"> SignIn </a>
+          </li>
+          <li>
+            <span class="fas fa-sign-out" id="headIcon"></span>
+            <a href="../pages/createaccount.html"> Create Account </a>
+          </li>
+       
+       
+       
+        <li>
+          <span class="fas fa-sign-out" id="headIcon"></span>
+          <a href="../index.html" onclick="signout()"> Signout </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  
+
+  <script src="scripts.js"></script>
+  <script>
+    const toggle = () => {
+      document.getElementById("nav").classList.toggle("navactive");
+    };
+
+    // Data for the cards
+    const cardData = [
+      { title: "Card 1", content: "This is the content of Card 1." },
+      { title: "Card 2", content: "This is the content of Card 2." },
+      { title: "Card 3", content: "This is the content of Card 3." },
+      { title: "Card 4", content: "This is the content of Card 4." },
+      { title: "Card 5", content: "This is the content of Card 5." },
+      { title: "Card 6", content: "This is the content of Card 6." }
+    ];
+
+    // Constants
+    const cardsPerPage = 3;
+
+    // Variables
+    let currentPage = 1;
+    let currentCards = [];
+
+    // Function to create a card
+    function createCard(title, content) {
+      var card = document.createElement("div");
+      card.classList.add("card");
+
+      var cardTitle = document.createElement("h2");
+      cardTitle.textContent = title;
+      card.appendChild(cardTitle);
+
+      var cardContent = document.createElement("p");
+      cardContent.textContent = content;
+      card.appendChild(cardContent);
+
+      return card;
+    }
+
+    // Function to display cards on the page
+    function displayCards(cards) {
+      var cardContainer = document.getElementById("cardContainer");
+      cardContainer.innerHTML = ""; // Clear existing cards
+
+      for (var i = 0; i < cards.length; i++) {
+        var card = createCard(cards[i].title, cards[i].content);
+        cardContainer.appendChild(card);
+      }
+    }
+
+    // Function to load more cards
+    function loadMoreCards() {
+      const startIndex = (currentPage - 1) * cardsPerPage;
+      const endIndex = startIndex + cardsPerPage;
+      currentCards = cardData.slice(startIndex, endIndex);
+
+      displayCards(currentCards);
+
+      currentPage++;
+
+      if (currentPage > Math.ceil(cardData.length / cardsPerPage)) {
+        var loadMoreButton = document.getElementById("loadMoreButton");
+        loadMoreButton.style.display = "none";
+      }
+    }
+
+    // Event listener for load more button
+    document.getElementById("loadMoreButton").addEventListener("click", loadMoreCards);
+
+    // Initial load
+    window.onload = loadMoreCards;
+
+    function signout() {
+      // Clear any user data or perform other necessary signout logic
+      // For example, you can remove the authentication token or clear local storage
+      alert("You have been signed out successfully.");
+      // Redirect to the login page or any other desired page
+      window.location.href = "http://127.0.0.1:5500/final-project2/login.html";
+    }
+  </script>
+</body>
+</html>

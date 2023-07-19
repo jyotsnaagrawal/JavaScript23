@@ -4,5 +4,37 @@
         "Cameri",
         "Jyotsna",
         "myfunction"
-    ]
+    ],
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Enabled",
+                "ssl": {}
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "FirstMySQLConnection",
+            "database": "jagrawal_12345",
+            "username": "jagrawal_jagrawal",
+            "askForPassword": true
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Enabled",
+                "ssl": {}
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "expense",
+            "database": "jagrawal_12345",
+            "username": "jagrawal_jagrawal"
+        }
+    ],
+    "open-php-html-js-in-browser.urlToOpen": "http://localhost/"
 }

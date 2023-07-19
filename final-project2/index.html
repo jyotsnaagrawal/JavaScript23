@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/home.css">
+  <script src="scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+
+  <title>My Expense Buddy</title>
+  <style>
+    /* custom CSS here to make the page responsive */
+
+    * {
+      padding: 0%;
+      margin: 0%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      position: relative;
+      width: 100%;
+      height: 100px;
+      background: rgb(8, 9, 19);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 4%;
+      width: 200%;
+    }
+
+    .brand .fa-github {
+      font-size: 35px;
+    }
+
+    .brand h1 {
+      margin-left: 2%;
+    }
+
+    .navbar {
+      position: relative;
+      width: 70%;
+      padding: 5%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .searchBox {
+      position: relative;
+      width: 40%;
+      display: flex;
+      align-items: center;
+    }
+
+    .searchBox input {
+      width: 100%;
+      height: 35px;
+      border: none;
+      border-radius: 8px;
+      padding: 1%;
+      text-indent: 10px;
+      font-size: 18px;
+    }
+
+    #searchIcon {
+      position: relative;
+      left: -30px;
+      font-size: 22px;
+      color: rgb(77, 77, 77);
+      cursor: pointer;
+      z-index: 221;
+    }
+
+    ul {
+      width: 60%;
+      text-align: center;
+    }
+
+    ul li {
+      display: inline-block;
+      margin-left: 4%;
+      transition: all 0.5s ease;
+      text-align: center;
+      cursor: pointer;
+      padding: 1%;
+      height: 20px;
+      overflow: hidden;
+    }
+
+    ul li:hover {
+      height: 45px;
+    }
+
+    ul li #headIcon {
+      display: block;
+      font-size: 22px;
+    }
+
+    ul li a {
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+    }
+
+    ul li a:active,
+    :focus {
+      text-decoration: underline;
+      font-weight: 700;
+    }
+
+    #menuIcon {
+      display: none;
+    }
+
+    @media (max-width: 100px) {
+      .navbar {
+        position: relative;
+        display: block;
+        width: 60%;
+        display: none;
+      }
+
+      .navbar.navactive {
+        display: inline;
+      }
+
+      .searchBox {
+        position: relative;
+        width: 100%;
+        top: 60px;
+        z-index: 221;
+        left: 5%;
+      }
+
+      #menuIcon {
+        display: inline;
+        position: fixed;
+        font-size: 25px;
+        margin-left: 88%;
+        z-index: 222;
+        float: right;
+        padding: 1%;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 1px solid rgb(221, 221, 221);
+      }
+
+      .navbar ul {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        background-color: rgb(8, 9, 19);
+      }
+
+      .navbar ul li {
+        display: block;
+        margin-top: 20px;
+        width: 100%;
+        height: 40px;
+        text-align: left;
+        position: relative;
+        top: 50px;
+        padding: 2%;
+      }
+
+      ul li #headIcon {
+        display: inline-block;
+        font-size: 33px;
+      }
+
+      ul li:hover {
+        background: rgb(35, 36, 51);
+      }
+
+      ul li a {
+        margin-left: 40px;
+        font-family: 600;
+      }
+    }
+
+    .intro-section {
+      text-align: center;
+    }
+
+    .intro-section h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .intro-section p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    
+
+    /* New CSS for image animation */
+    .image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 500px;
+    }
+
+    .image-container img {
+      width: 600px;
+      height: 400px;
+      margin: 10px;
+      margin-left: 10px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .image-container img.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* New CSS for animated footer */
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      animation: footerAnimation 1s ease-in-out infinite alternate;
+      margin-top: auto;
+      /* Add this property to push the footer to the bottom */
+    }
+
+    @keyframes footerAnimation {
+      20% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <img src="images/logo.png" alt="Logo" style="width: 90px; height: 90px;">
+      <span class="fab fa-github"></span>
+      <h1 id="typed-heading">My Expense Buddy</h1>
+    </div>
+    <ul>
+      <li>
+        <span class="fas fa-home" id="headIcon"></span>
+        <a href="pages/home.html"> Home </a>
+      </li>
+    
+    </ul>
+  </header>
+
+  <!-- Add the image container and images -->
+  <div class="image-container">
+    <img src="images/1.jpg" alt="Image 1" class="show">
+    <img src="images/logo.png" alt="Image 2">
+    <img src="images/3.jpg" alt="Image 3">
+    
+    
+  </div>
+
+  <!-- Move the closing footer tag to the end of the body -->
+  <footer>
+    &copy; 2023 Jyotsna Agrawal
+  </footer>
+
+  <script>
+      var typed = new Typed('#typed-heading', {
+          strings: ['Welcome to My Expense Buddy', 'Welcome to My Expense Buddy', 'Manage Your Expenses'],
+          typeSpeed: 50, // Typing speed in milliseconds
+          loop: true // Whether to loop the animation
+        });
+    // JavaScript code to handle the image animation
+    const images = document.querySelectorAll('.image-container img');
+    let imageIndex = 0;
+
+    function showNextImage() {
+      images[imageIndex].classList.remove('show');
+      imageIndex = (imageIndex + 1) % images.length;
+      images[imageIndex].classList.add('show');
+    }
+
+    setInterval(showNextImage, 3000);
+  </script>
+</body>
+
+</html>

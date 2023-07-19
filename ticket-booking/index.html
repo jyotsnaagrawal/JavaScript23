@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book My tickets</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <style>
+    /* Custom CSS */
+    body {
+      background-image: url('tickets.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      width: 100%;
+    }
+
+    .header {
+      background-color: #333333;
+      color: #ffffff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .footer {
+      background-color: #333333;
+      color: #ffffff;
+      padding: 10px;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Book My tickets</h1>
+  </div>
+
+  <div class="container">
+    <form id="bookingForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="ticketQuantity">Number of Tickets:</label>
+        <input type="number" class="form-control" id="ticketQuantity" min="1" required>
+      </div>
+      <div class="form-group">
+        <label for="seat">Seat:</label>
+        <select class="form-control" id="seat">
+          <option value="A1">A1</option>
+          <option value="A2">A2</option>
+          <option value="B1">B1</option>
+          <option value="B2">B2</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="date" class="form-control" id="date" required>
+      </div>
+      <div class="form-group">
+        <label for="time">Time:</label>
+        <input type="time" class="form-control" id="time" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Book Now</button>
+    </form>
+
+    <div id="bookingDetailsContainer"></div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2023 Jyotsna Agrawal. All rights reserved.</p>
+  </div>
+
+  <script src="scripts/script.js"></script>
+</body>
+</html>

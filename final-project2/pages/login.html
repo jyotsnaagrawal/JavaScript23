@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .container h2 {
+      margin-top: 0;
+    }
+
+    .container input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    .container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .container .divider {
+      margin: 10px 0;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .container .google-btn {
+      background-color: #DB4437;
+    }
+
+    .container .google-btn img {
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    .container .forgot-password {
+      font-size: 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <h2>Login</h2>
+  <input type="email" id="emailInput" placeholder="Email address">
+  <input type="password" id="passwordInput" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <div id="profileLinkContainer" style="display: none;">
+    <p>Welcome, <span id="loggedInUserName"></span>! Here's your <a href="profile.html">Profile</a>.</p>
+  </div>
+</div>
+
+  <script>
+         function login() {
+            var emailInput = document.getElementById("emailInput");
+            var passwordInput = document.getElementById("passwordInput");
+            var email = emailInput.value;
+            var password = passwordInput.value;
+
+            // Perform login logic, e.g., check against stored data
+            var storedUserData = JSON.parse(localStorage.getItem("userData"));
+            if (storedUserData) {
+              var storedEmail = storedUserData.email;
+              var storedPassword = storedUserData.password;
+
+              if (storedEmail === email && storedPassword === password) {
+                alert("Login successful!");
+                // Show the profile link and display the user's login name
+                var profileLinkContainer = document.getElementById("profileLinkContainer");
+                var loggedInUserName = document.getElementById("loggedInUserName");
+                loggedInUserName.textContent = email;
+                profileLinkContainer.style.display = "block";
+
+                return;
+              }
+            }
+
+            alert("Invalid email or password. Please try again.");
+          }
+
+  </script>
+</body>
+
+</html>
