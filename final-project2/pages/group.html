@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .listbox {
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="groupTitle"></h1>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Persons</h4>
+                <select id="personsListbox" class="form-control listbox" size="5"></select>
+                <div class="mt-2">
+                    <label for="personName">Enter Person Name:</label>
+                    <input type="text" id="personName" class="form-control">
+                    <button id="addPersonButton" class="btn btn-primary mt-2">Add</button>
+                </div>
+                <button id="editPersonButton" class="btn btn-primary mt-2">Edit</button>
+            </div>
+            <div class="col-md-4">
+                <h4>Expenses</h4>
+                <select id="expensesListbox" class="form-control listbox" size="5"></select>
+                <button id="addExpenseButton" class="btn btn-primary mt-2">Add Expense</button>
+            </div>
+            <div class="col-md-4">
+                <h4>To Be Paid</h4>
+                <select id="duesListbox" class="form-control listbox" size="5"></select>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve persons for the selected group from local storage
+        function getPersonsFromLocalStorage(groupName) {
+            const persons = JSON.parse(localStorage.getItem(`persons_${groupName}`));
+            return persons ? persons : [];
+        }
+
+        // Save persons for the selected group to local storage
+        function savePersonsToLocalStorage(groupName, persons) {
+            localStorage.setItem(`persons_${groupName}`, JSON.stringify(persons));
+        }
+
+        // Retrieve expenses for the selected group from local storage
+        function getExpensesFromLocalStorage(groupName) {
+            const expenses = JSON.parse(localStorage.getItem(`expenses_${groupName}`));
+            return expenses ? expenses : [];
+        }
+
+        // Save expenses for the selected group to local storage
+        function saveExpensesToLocalStorage(groupName, expenses) {
+            localStorage.setItem(`expenses_${groupName}`, JSON.stringify(expenses));
+        }
+
+        // Retrieve dues for the selected group from local storage
+        function getDuesFromLocalStorage(groupName) {
+            const dues = JSON.parse(localStorage.getItem(`dues_${groupName}`));
+            return dues ? dues : [];
+        }
+
+        // Save dues for the selected group to local storage
+        function saveDuesToLocalStorage(groupName, dues) {
+            localStorage.setItem(`dues_${groupName}`, JSON.stringify(dues));
+        }
+
+        // Populate the persons listbox
+        function populatePersonsListbox() {
+            const groupName = getSelectedGroup();
+            if (!groupName) {
+                return;
+            }
+
+            const personsListbox = document.getElementById('personsListbox');
+            personsListbox.innerHTML = '';
+
+            const persons = getPersonsFromLocalStorage(groupName);
+            for (const person of persons) {
+                const option = document.createElement('option');
+                option.text = person;
+                personsListbox.add(option);
+            }
+        }
+
+        // Add a person to the selected group
+        function addPerson() {
+            const groupName = getSelectedGroup();
+            if (!groupName) {
+                alert('No group selected');
+                return;
+            }
+
+            const personNameInput = document.getElementById('personName');
+            const personName = personNameInput.value.trim();
+            if (!personName) {
+                alert('Please enter a person name');
+                return;
+            }
+
+            const persons = getPersonsFromLocalStorage(groupName);
+            persons.push(personName);
+            savePersonsToLocalStorage(groupName, persons);
+            populatePersonsListbox();
+
+            personNameInput.value = '';
+        }
+
+        // Edit the selected person in the group
+        function editPerson() {
+            const groupName = getSelectedGroup();
+            if (!groupName) {
+                alert('No group selected');
+                return;
+            }
+
+            const personsListbox = document.getElementById('personsListbox');
+            const selectedPersonIndex = personsListbox.selectedIndex;
+            if (selectedPersonIndex === -1) {
+                alert('Please select a person to edit');
+                return;
+            }
+
+            const newPersonName = prompt('Enter the new name:');
+            if (!newPersonName) {
+                return;
+            }
+
+            const persons = getPersonsFromLocalStorage(groupName);
+            persons[selectedPersonIndex] = newPersonName;
+            savePersonsToLocalStorage(groupName, persons);
+            populatePersonsListbox();
+        }
+
+        // Populate the expenses listbox
+        function populateExpensesListbox() {
+            const groupName = getSelectedGroup();
+            if (!groupName) {
+                return;
+            }
+
+            const expensesListbox = document.getElementById('expensesListbox');
+            expensesListbox.innerHTML = '';
+
+            const expenses = getExpensesFromLocalStorage(groupName);
+            for (const expense of expenses) {
+                const option = document.createElement('option');
+                option.text = `${expense.name} - ${expense.amount}`;
+                expensesListbox.add(option);
+            }
+        }
+
+        // Navigate to the add_expenses.html page
+        function addExpense() {
+            const groupName = getSelectedGroup();
+            if (!groupName) {
+                alert('No group selected');
+                return;
+            }
+
+            window.location.href = `add_expenses.html?group=${groupName}`;
+        }
+
+        // Populate the dues listbox
+        function populateDuesListbox() {
+            const groupName = getSelectedGroup();
+            if (!groupName) {
+                return;
+            }
+
+            const duesListbox = document.getElementById('duesListbox');
+            duesListbox.innerHTML = '';
+
+            const dues = getDuesFromLocalStorage(groupName);
+            for (const due of dues) {
+                const option = document.createElement('option');
+                option.text = `${due.person} - ${due.amount}`;
+                duesListbox.add(option);
+            }
+        }
+
+        // Retrieve the selected group name from the query parameter
+        function getSelectedGroup() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('group');
+        }
+
+        // Retrieve the stored group names from local storage
+        const storedGroupNames = JSON.parse(localStorage.getItem('groupNames')) || [];
+
+        // Retrieve the selected group name from local storage
+        const selectedGroupName = localStorage.getItem('selectedGroupName');
+
+        // Find the selected group object from the stored group names
+        const selectedGroup = storedGroupNames.find((group) => group.name === selectedGroupName);
+
+        // Display the selected group name
+        const groupTitle = document.getElementById('groupTitle');
+        groupTitle.textContent = `Group: ${selectedGroupName}`;
+
+        // Populate the persons listbox
+        populatePersonsListbox();
+
+        // Populate the expenses listbox
+        populateExpensesListbox();
+
+        // Populate the dues listbox
+        populateDuesListbox();
+
+        // Add event listeners
+        const addPersonButton = document.getElementById('addPersonButton');
+        addPersonButton.addEventListener('click', addPerson);
+
+        const editPersonButton = document.getElementById('editPersonButton');
+        editPersonButton.addEventListener('click', editPerson);
+
+        const addExpenseButton = document.getElementById('addExpenseButton');
+        addExpenseButton.addEventListener('click', addExpense);
+    </script>
+</body>
+
+</html>

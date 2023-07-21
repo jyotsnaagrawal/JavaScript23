@@ -189,19 +189,20 @@
         
 
         function goToAddExpenses() {
-            if (!selectedGroupName) {
-                alert("Please select a group first.");
-                return;
-            }
+                // Check if a group is selected
+                if (!selectedGroupName) {
+                    alert("Please select a group first.");
+                    return;
+                }
 
-            window.location.href = "add_expenses.html";
-        }
+                // Redirect to the Add Expenses page with the selected group name as a query parameter
+                window.location.href = "add_expenses.html?group=" + encodeURIComponent(selectedGroupName);
+            }
+        
 
         // Populate the listbox with group names
         populateListbox();
-    </script>
-
-    <script>
+    
         function modifyGroupName() {
             if (!selectedGroupName) {
                 alert("Please select a group first.");
