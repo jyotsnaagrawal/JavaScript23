@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Effects Demo</title>
+    <!-- Include the jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        /* Some basic styling for the divs and images */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        p {
+            margin: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .button-container button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>jQuery Effects Demo</h1>
+
+    <div class="button-container">
+        <button id="hideShowBtn">Hide/Show</button>
+        <button id="fadeBtn">Fade</button>
+        <button id="slideBtn">Slide</button>
+    </div>
+
+    <div class="container">
+        <div class="box" id="image1Box">
+            <img src="1.jpg" alt="Image 1">
+            <p id="hideShowText">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+
+        <div class="box" id="image2Box">
+            <img src="5.jpg" alt="Image 2">
+            <p id="fadeText">Aliquam erat volutpat. Vivamus non dui eu est euismod mattis quis vel ligula.</p>
+        </div>
+
+        <div class="box" id="image3Box">
+            <img src="3.jpg" alt="Image 3">
+            <p id="slideText">Nulla congue tellus vel enim consequat, vel bibendum orci rhoncus.</p>
+        </div>
+    </div>
+
+    <script src="script.js">
+    </script>
+</body>
+
+</html>
