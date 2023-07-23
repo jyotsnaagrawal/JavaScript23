@@ -5,35 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Group</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #000;
+            color: #070101;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         h1 {
             margin-top: 50px;
+            font-size: 28px;
         }
 
         .container {
             margin-top: 20px;
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border: 3px solid #151414;
+            border-radius: 5px;
         }
 
         .container input {
-            width: 300px;
+            width: 100%;
             padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 5px solid black;
         }
 
         .container button {
-            display: block;
-            margin-top: 10px;
+            width: 100%;
             padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
+            background-color: #3c3ce3;
+            color: rgb(244, 243, 248);
             border: none;
-            border-radius: 5px;
+            border-radius: 13px;
             cursor: pointer;
         }
 
@@ -49,11 +66,13 @@
 </head>
 
 <body>
-    <h1>Create New Group</h1>
     <div class="container">
-        <label for="groupNameInput">My group name is:</label>
-        <input type="text" id="groupNameInput" placeholder="Enter group name">
-        <button onclick="saveGroup()">Save</button>
+        <h1>Create New Group</h1>
+        <div class="form-group">
+            <label for="groupNameInput">My group name is:</label>
+            <input type="text" class="form-control" id="groupNameInput" placeholder="Enter group name">
+        </div>
+        <button class="btn btn-primary" onclick="saveGroup()">Save</button>
     </div>
 
     <div id="messageBox">
@@ -93,33 +112,10 @@
             // Clear the input field
             groupNameInput.value = "";
 
-            // Show a message if the user is the only member
-            if (storedGroupNames.length === 1) {
-                alert("You are the only member in this group!");
-            }
-
-            // Show buttons to add members or exit
-            var buttonContainer = document.createElement("div");
-            buttonContainer.style.marginTop = "20px";
-
-            var addButton = document.createElement("button");
-            addButton.textContent = "Add Members to Group";
-            addButton.addEventListener("click", function () {
-                // Navigate to add members page
-                window.location.href = "add_members.html";
-            });
-
-            var cancelButton = document.createElement("button");
-            cancelButton.textContent = "Cancel";
-            cancelButton.addEventListener("click", function () {
-                // Navigate back to the previous page
-                window.history.back();
-            });
-
-            buttonContainer.appendChild(addButton);
-            buttonContainer.appendChild(cancelButton);
-
-            document.body.appendChild(buttonContainer);
+            // Redirect to the "Manage Group" window after 2 seconds
+            setTimeout(function () {
+                window.location.href = "manage_group_list.html";
+            }, 2000);
         }
     </script>
 </body>

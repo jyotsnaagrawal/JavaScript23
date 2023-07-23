@@ -87,71 +87,72 @@
     <form onsubmit="saveExpense(event)">
       <label for="selectedGroup">Selected Group:</label>
       <input type="text" id="selectedGroup" name="selectedGroup" value="" readonly>
-
+      
       <label for="datePicker">Select Date:</label>
       <input type="date" id="datePicker" name="date" required>
-
+      
       <label for="expenseNameInput">Expense Name:</label>
       <input type="text" id="expenseNameInput" name="expenseName" placeholder="Enter expense name" required>
-
+      
       <label for="expenseAmountInput">Expense Amount:</label>
       <input type="number" id="expenseAmountInput" name="expenseAmount" placeholder="Enter expense amount" required>
-
+      
       <label for="paidByInput">Paid By:</label>
       <select id="paidByInput" name="paidBy" multiple required>
-        <!-- Group members options will be added dynamically -->
+        <!-- Options will be added dynamically with JavaScript -->
       </select>
-
+      
       <label for="involvedInput">Persons Involved:</label>
       <select id="involvedInput" name="involved[]" multiple required>
-        <!-- Group members options will be added dynamically -->
+        <!-- Options will be added dynamically with JavaScript -->
       </select>
-
+      
       <button type="submit">Save</button>
       <button type="button" onclick="goBack()">Back</button>
-    </form>
-  </div>
+      </form>
+      </div>
+      
+      <script>
+        // Retrieve the stored group names from local storage
+        const storedGroupNames = JSON.parse(localStorage.getItem("groupNames")) || [];
 
-  <script>
-    // Retrieve the stored group names from local storage
-    const storedGroupNames = JSON.parse(localStorage.getItem("groupNames")) || [];
+        // Retrieve the selected group name from local storage
+          const selectedGroupName = localStorage.getItem("selectedGroupName");
 
-    // Retrieve the selected group name from local storage
-    const selectedGroupName = localStorage.getItem("selectedGroupName");
+          // Populate the selected group name
+          const selectedGroupInput = document.getElementById("selectedGroup");
+          selectedGroupInput.value = selectedGroupName;
 
-    // Find the selected group object from the stored group names
-    const selectedGroup = storedGroupNames.find(group => group.name === selectedGroupName);
 
-    // Populate the selected group name
-    const selectedGroupInput = document.getElementById("selectedGroup");
-    selectedGroupInput.value = selectedGroupName;
+        // Find the selected group object from the stored group names
+        const selectedGroup = storedGroupNames.find(group => group.name === selectedGroupName);
 
-    // Retrieve the members of the selected group
-    const selectedGroupMembers = selectedGroup ? selectedGroup.persons : [];
+        // Retrieve the members of the selected group
+        const selectedGroupMembers = selectedGroup ? selectedGroup.persons : [];
 
-    // Populate the "Paid By" and "Persons Involved" dropdowns
-    const paidByInput = document.getElementById("paidByInput");
-    const involvedInput = document.getElementById("involvedInput");
+        // Populate the "Paid By" and "Persons Involved" dropdowns
+        const paidByInput = document.getElementById("paidByInput");
+        const involvedInput = document.getElementById("involvedInput");
 
-    // Populate the "Paid By" dropdown
-    for (const member of selectedGroupMembers) {
-      const option = document.createElement("option");
-      option.value = member;
-      option.textContent = member;
-      paidByInput.appendChild(option);
-    }
+        // Populate the "Paid By" dropdown
+        for (const member of selectedGroupMembers) {
+          const option = document.createElement("option");
+          option.value = member;
+          option.textContent = member;
+          paidByInput.appendChild(option);
+        }
 
-    // Populate the "Persons Involved" dropdown
-    for (const member of selectedGroupMembers) {
-      const option = document.createElement("option");
-      option.value = member;
-      option.textContent = member;
-      involvedInput.appendChild(option);
-    }
+        // Populate the "Persons Involved" dropdown
+        for (const member of selectedGroupMembers) {
+          const option = document.createElement("option");
+          option.value = member;
+          option.textContent = member;
+          involvedInput.appendChild(option);
+        }
 
-    // Function to save the expense
-    function saveExpense(event) {
-      event.preventDefault();
+        // Function to save the expense
+        function saveExpense(event) {
+          event.preventDefault();
 
       // Retrieve the form input values
       const date = document.getElementById("datePicker").value;
@@ -206,8 +207,19 @@
         involvedOptions[i].selected = false;
       }
     }
+    // Function to save the selected group name in local storage
+    function saveSelectedGroupName(groupName) {
+      localStorage.setItem("selectedGroupName", groupName);
+    }
 
-    // Function to navigate back to the previous page
+    // Attach an event listener to the list items to save the selected group name
+    var groupItems = document.getElementsByTagName("li");
+    for (var i = 0; i < groupItems.length; i++) {
+      groupItems[i].addEventListener("click", function (event) {
+        saveSelectedGroupName(event.target.textContent);
+      });
+    }
+   // Function to navigate back to the previous page
     function goBack() {
       window.history.back();
     }

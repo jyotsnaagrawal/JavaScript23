@@ -7,7 +7,16 @@
   <title>Login Page</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+       font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #000;
+            color: #070101;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
     }
 
     .container {
@@ -17,9 +26,12 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       text-align: center;
+      background-color: #fff;
+      color: #000;
+      animation:both;
     }
 
-    .container h2 {
+    .container h1 {
       margin-top: 0;
     }
 
@@ -27,17 +39,24 @@
       width: 100%;
       padding: 10px;
       margin-bottom: 10px;
+      margin-top: 10px;
       box-sizing: border-box;
+      border: 5px solid #211818;
+      border-radius: 5px;
     }
 
     .container button {
       width: 100%;
       padding: 10px;
-      background-color: #4CAF50;
+      background-color: #2623cb;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+    }
+
+    .container button:hover {
+      background-color: #45a049;
     }
 
     .container .divider {
@@ -58,48 +77,95 @@
       font-size: 14px;
       margin-top: 10px;
     }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 20;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Responsive styles */
+    @media (max-width: 480px) {
+      .container {
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
 
 <body>
-<div class="container">
-  <h2>Login</h2>
-  <input type="email" id="emailInput" placeholder="Email address">
-  <input type="password" id="passwordInput" placeholder="Password">
-  <button onclick="login()">Login</button>
-  <div id="profileLinkContainer" style="display: none;">
-    <p>Welcome, <span id="loggedInUserName"></span>! Here's your <a href="profile.html">Profile</a>.</p>
+  <div class="container">
+    <h1>Login</h1>
+    <form>
+      <input type="email" id="emailInput" placeholder="Email address">
+      <input type="password" id="passwordInput" placeholder="Password">
+      <button type="button" onclick="login()">Login</button>
+    </form>
+    <div id="profileLinkContainer" style="display: none;">
+      <p>Welcome, <span id="loggedInUserName"></span>! Here's your <a href="profile.html">Profile</a>.</p>
+    </div>
   </div>
-</div>
 
   <script>
-         function login() {
-            var emailInput = document.getElementById("emailInput");
-            var passwordInput = document.getElementById("passwordInput");
-            var email = emailInput.value;
-            var password = passwordInput.value;
+    function login() {
+      var emailInput = document.getElementById("emailInput");
+      var passwordInput = document.getElementById("passwordInput");
+      var email = emailInput.value;
+      var password = passwordInput.value;
 
-            // Perform login logic, e.g., check against stored data
-            var storedUserData = JSON.parse(localStorage.getItem("userData"));
-            if (storedUserData) {
-              var storedEmail = storedUserData.email;
-              var storedPassword = storedUserData.password;
+      // Retrieve user data from local storage
+      var storedUserData = JSON.parse(localStorage.getItem("userData"));
 
-              if (storedEmail === email && storedPassword === password) {
-                alert("Login successful!");
-                // Show the profile link and display the user's login name
-                var profileLinkContainer = document.getElementById("profileLinkContainer");
-                var loggedInUserName = document.getElementById("loggedInUserName");
-                loggedInUserName.textContent = email;
-                profileLinkContainer.style.display = "block";
+      // Check if the entered credentials match the stored user data
+      if (storedUserData && storedUserData.email === email && storedUserData.password === password) {
+        // Set the user's login status in local storage
+        localStorage.setItem("loggedInUserName", email);
 
-                return;
-              }
-            }
+        // Show the profile link and display the user's login name
+        var profileLinkContainer = document.getElementById("profileLinkContainer");
+        var loggedInUserName = document.getElementById("loggedInUserName");
+        loggedInUserName.textContent = email;
+        profileLinkContainer.style.display = "block";
+      } else {
+        // Login failed, display error message
+        alert('Invalid email or password. Please try again.');
+      }
+    }
 
-            alert("Invalid email or password. Please try again.");
-          }
+    // Function to register a new user
+    function register() {
+      var emailInput = document.getElementById("emailInput");
+      var passwordInput = document.getElementById("passwordInput");
+      var email = emailInput.value;
+      var password = passwordInput.value;
 
+      // Check if the email is already registered
+      var storedUserData = JSON.parse(localStorage.getItem("userData")) || [];
+      var existingUser = storedUserData.find(user => user.email === email);
+      if (existingUser) {
+        alert('An account with this email already exists. Please log in.');
+        return;
+      }
+
+      // Create a new user object and add it to the stored user data
+      var newUser = {
+        email: email,
+        password: password,
+        groups: [] // Initialize with an empty array to store group data
+      };
+      storedUserData.push(newUser);
+
+      // Save the updated user data to local storage
+      localStorage.setItem("userData", JSON.stringify(storedUserData));
+
+      // Inform the user that registration was successful
+      alert('Registration successful. You can now log in.');
+    }
   </script>
 </body>
 

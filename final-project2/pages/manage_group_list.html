@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Group List</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f1f1f1;
+            background-color: #000;
+            color: #fff;
             margin: 0;
             padding: 0;
         }
@@ -17,7 +20,6 @@
         h1 {
             margin-top: 50px;
             font-size: 28px;
-            color: #333;
         }
 
         ul {
@@ -35,54 +37,50 @@
             transition: color 0.3s ease;
         }
 
+        li.selected {
+            color: #4CAF50;
+            /* Highlight color for selected group */
+        }
+
         li:hover {
             color: #003399;
         }
 
-        .button-container {
-            display: none;
-            margin-top: 20px;
-            transition: opacity 0.5s ease;
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
-        .active .button-container {
-            display: block;
-        }
-
-        .button-container button {
-            display: block;
-            margin: 10px auto;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        .button-container button:hover {
-            background-color: #45a049;
+        .container {
+            animation: fadeIn 1s ease-in-out;
         }
     </style>
-
 </head>
 
 <body>
-    <h1>Manage Group List</h1>
-    <ul id="groupList"></ul>
-
-    <div id="buttonContainer" class="button-container">
-        <button onclick="addPerson()">Add Person</button>
-        <button onclick="goToAddExpenses()">Add Expenses</button>
-        <button>To be Paid</button>
+    <div class="container">
+        <h1>Manage Group List</h1>
+        <ul id="groupList"></ul>
+        <!-- Add the element to hold the logged-in user's name -->
+        <div id="loggedInUserName" style="display: none;"></div>
     </div>
 
     <script>
         var selectedGroupName = null;
 
         function populateListbox() {
+            // Check if the user is logged in before proceeding
+            if (!isLoggedIn()) {
+                alert("Please log in to manage groups.");
+                return;
+            }
+
             var groupList = document.getElementById("groupList");
             groupList.innerHTML = "";
 
@@ -93,9 +91,14 @@
                 storedGroupNames.forEach(function (group) {
                     var li = document.createElement("li");
                     li.textContent = group.name;
-                    li.addEventListener("click", function () {
-                        toggleButtons(li, group.name);
-                    });
+
+                    // Add the "selected" class to the li element if it matches the selectedGroupName
+                    if (group.name === selectedGroupName) {
+                        li.classList.add("selected");
+                    }
+
+                    // Use the onclick attribute to handle the click event directly
+                    li.setAttribute("onclick", "toggleButtons(this, '" + group.name + "')");
                     groupList.appendChild(li);
                 });
             } else {
@@ -106,156 +109,51 @@
         }
 
         function toggleButtons(selectedItem, groupName) {
-                var groupItems = document.getElementsByTagName("li");
-
-                for (var i = 0; i < groupItems.length; i++) {
-                    groupItems[i].classList.remove("active");
-                }
-
-                selectedItem.classList.add("active");
-                selectedGroupName = groupName;
-
-                var buttonContainer = document.getElementById("buttonContainer");
-
-                if (selectedItem.classList.contains("active")) {
-                    buttonContainer.style.display = "block";
-                } else {
-                    buttonContainer.style.display = "none";
-                }
-
-                // Retrieve the stored group names from local storage
-                var storedGroupNames = JSON.parse(localStorage.getItem("groupNames"));
-
-                // Find the selected group object from the stored group names
-                var selectedGroup = storedGroupNames.find(function (group) {
-                    return group.name === selectedGroupName;
-                });
-
-                // Retrieve the member list for the selected group
-                var members = selectedGroup ? selectedGroup.persons : [];
-
-                // Retrieve the dropdowns for paidBy and involvedInput
-                var paidByInput = document.getElementById("paidByInput");
-                var involvedInput = document.getElementById("involvedInput");
-
-                // Clear the existing options
-                paidByInput.innerHTML = "";
-                involvedInput.innerHTML = "";
-
-                // Populate the dropdowns with the member list
-                members.forEach(function (member) {
-                    var option = document.createElement("option");
-                    option.value = member;
-                    option.textContent = member;
-                    paidByInput.appendChild(option);
-                    involvedInput.appendChild(option.cloneNode(true));
-                });
+            // Check if the user is logged in before proceeding
+            if (!isLoggedIn()) {
+                alert("Please log in to manage groups.");
+                return;
             }
 
+            var groupItems = document.getElementsByTagName("li");
 
- function addPerson() {
-        if (!selectedGroupName) {
-            alert("Please select a group first.");
-            return;
+            for (var i = 0; i < groupItems.length; i++) {
+                groupItems[i].classList.remove("selected");
+            }
+
+            selectedItem.classList.add("selected");
+            selectedGroupName = groupName;
+
+            // Call the openSplitBillWindow function to navigate to the split_bill.html page
+            openSplitBillWindow();
         }
 
-        // Redirect to the Add Members page with the selected group name as a query parameter
-        window.location.href = "add_members.html?group=" + encodeURIComponent(selectedGroupName);
-    }
+        // Helper function to check if the user is logged in
+        function isLoggedIn() {
+            var loggedInUserName = localStorage.getItem("loggedInUserName");
+            // Check if the user's login status exists in local storage and if it has a non-empty value
+            return loggedInUserName && loggedInUserName.trim() !== "";
+        }
 
-
-
-            var personName = prompt("Enter person's name");
-            if (personName) {
-                // Retrieve the stored group names from local storage
-                var storedGroupNames = JSON.parse(localStorage.getItem("groupNames"));
-
-                // Find the selected group name in the stored group names
-                var selectedGroup = storedGroupNames.find(function (group) {
-                    return group.name === selectedGroupName;
-                });
-
-                if (selectedGroup) {
-                    // Add the person's name to the selected group's persons array
-                    selectedGroup.persons.push(personName);
-
-                    // Update the stored group names in local storage
-                    localStorage.setItem("groupNames", JSON.stringify(storedGroupNames));
-
-                    // Refresh the group list to reflect the added person
-                    populateListbox();
-                }
+        function openSplitBillWindow() {
+            // Check if the user is logged in before proceeding
+            if (!isLoggedIn()) {
+                alert("Please log in to manage groups.");
+                return;
             }
-        
 
-        function goToAddExpenses() {
-                // Check if a group is selected
-                if (!selectedGroupName) {
-                    alert("Please select a group first.");
-                    return;
-                }
-
-                // Redirect to the Add Expenses page with the selected group name as a query parameter
-                window.location.href = "add_expenses.html?group=" + encodeURIComponent(selectedGroupName);
+            // Check if a group is selected
+            if (!selectedGroupName) {
+                alert("Please select a group first.");
+                return;
             }
-        
+
+            // Navigate to the "split_bill.html" page with the selected group name as a query parameter
+            window.location.href = "split_bill.html?group=" + encodeURIComponent(selectedGroupName);
+        }
 
         // Populate the listbox with group names
         populateListbox();
-    
-        function modifyGroupName() {
-            if (!selectedGroupName) {
-                alert("Please select a group first.");
-                return;
-            }
-
-            var newGroupName = prompt("Enter new group name");
-            if (newGroupName) {
-                // Retrieve the stored group names from local storage
-                var storedGroupNames = JSON.parse(localStorage.getItem("groupNames"));
-
-                // Find the selected group name in the stored group names
-                var selectedGroup = storedGroupNames.find(function (group) {
-                    return group.name === selectedGroupName;
-                });
-
-                if (selectedGroup) {
-                    // Update the group name
-                    selectedGroup.name = newGroupName;
-
-                    // Update the stored group names in local storage
-                    localStorage.setItem("groupNames", JSON.stringify(storedGroupNames));
-
-                    // Refresh the group list to reflect the modified group name
-                    populateListbox();
-                }
-            }
-        }
-
-        function deleteGroupName() {
-            if (!selectedGroupName) {
-                alert("Please select a group first.");
-                return;
-            }
-
-            var confirmDelete = confirm("Are you sure you want to delete the group?");
-            if (confirmDelete) {
-                // Retrieve the stored group names from local storage
-                var storedGroupNames = JSON.parse(localStorage.getItem("groupNames"));
-
-                // Filter out the selected group name from the stored group names
-                var updatedGroupNames = storedGroupNames.filter(function (group) {
-                    return group.name !== selectedGroupName;
-                });
-
-                // Update the stored group names in local storage
-                localStorage.setItem("groupNames", JSON.stringify(updatedGroupNames));
-
-                // Clear the selected group name and refresh the group list
-                selectedGroupName = null;
-                populateListbox();
-            }
-        }
     </script>
 </body>
 
