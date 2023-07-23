@@ -171,7 +171,7 @@
         // Populate the selected group name on the page
         const selectedGroupNameElement = document.getElementById("selectedGroupName");
         selectedGroupNameElement.textContent = selectedGroupName;
-        
+
 
         // Function to add a member to the "Persons Involved" and "Paid By" select elements
         function addMemberToSelects(memberName) {
@@ -208,6 +208,13 @@
 
             // Save the updated group members list back to local storage
             localStorage.setItem(selectedGroupName, JSON.stringify(groupMembers));
+
+            const storedGroupNames = JSON.parse(localStorage.getItem("groupNames")) || [];
+            const selectedGroup = storedGroupNames.find(group => group.name === selectedGroupName);
+            const groupPersons = selectedGroup.persons || [];
+            groupPersons.push(memberName);
+
+            localStorage.setItem("groupNames", JSON.stringify(storedGroupNames));
 
             // Clear the input field after adding the member
             memberNameInput.val("");
@@ -331,12 +338,12 @@
             // Retrieve the group members and expenses from local storage
             const storedGroupNames = JSON.parse(localStorage.getItem("groupNames")) || [];
             const selectedGroup = storedGroupNames.find(group => group.name === selectedGroupName);
-             // Check if the selected group is defined
+            // Check if the selected group is defined
             if (!selectedGroup || !selectedGroup.persons) {
                 return;
             }
             const groupMembers = selectedGroup.persons || [];
-            const expenses = JSON.parse(localStorage.getItem("expenses")) || [];    
+            const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 
             // Create a map to store each member's total expenses and the count of expenses they are involved in
             const memberTotalExpenses = new Map();
@@ -350,8 +357,11 @@
 
             // Calculate each member's total expenses and expense count from the expenses list
             expenses.forEach(expense => {
-                const involvedCount = expense.involvedPersons.length;
-                const amountPerPerson = expense.amount / involvedCount;
+                var amountPerPerson = 0;
+                if (expense.involvedPersons != null) {
+                    const involvedCount = expense.involvedPersons.length;
+                    amountPerPerson = expense.amount / involvedCount;
+                }
 
                 // Distribute the amount among each involved member
                 expense.involvedPersons.forEach(involvedPerson => {
