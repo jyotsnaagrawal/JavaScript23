@@ -6,3 +6,5 @@ innerHTML
 img
 &copy
 myFunction
+preventDefault
+emailPattern

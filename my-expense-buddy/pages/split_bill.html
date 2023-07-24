@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Bill</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            background-color: #1d1b1b;
+            color: #1616e2;
+            font-family: Arial, sans-serif;
+            font-weight: bolder;
+        }
+
+        section {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Style for form elements */
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #181616;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style for the split amount table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Add responsive styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            section {
+                padding: 10px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- Add your header content here -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">My Expense Buddy</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li>
+                        <span class="fas fa-sign-out" id="headIcon"></span>
+                        <a href="../index.html" onclick="signout()"> Signout </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1 class="my-4">Split Bill for Group: <span id="selectedGroupName"></span></h1>
+
+        <!-- Add Members Section -->
+        <section id="addMembers">
+            <h2>Add Members to Group</h2>
+            <div class="form-row">
+                <div class="col-md-8">
+                    <input type="text" id="memberName" class="form-control" placeholder="Enter member name">
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary btn-block" onclick="addMember()">Add Member</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Expenses Section -->
+        <section id="addExpenses">
+            <h2>Add Expenses</h2>
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label for="expenseDate">Date:</label>
+                    <input type="date" id="expenseDate" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label for="expenseName">Expense Name:</label>
+                    <input type="text" id="expenseName" class="form-control" placeholder="Enter expense name">
+                </div>
+                <div class="col-md-3">
+                    <label for="expenseAmount">Expense Amount:</label>
+                    <input type="number" id="expenseAmount" class="form-control" placeholder="Enter expense amount">
+                </div>
+                <div class="col-md-3">
+                    <label for="paidBy">Paid By:</label>
+                    <select id="paidBy" class="form-control">
+                        <!-- Options for adding group members will be added dynamically -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-row mt-3">
+                <div class="col-md-6">
+                    <label for="involvedPersons">Persons Involved:</label>
+                    <div id="checkboxGroup">
+                        <!-- Checkboxes for group members will be added dynamically -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-primary btn-block" onclick="addExpense()">Add Expense</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Split Amount Section -->
+        <section id="splitAmount">
+            <h2>Split Amount</h2>
+            <!-- Table to display the split amounts will be generated dynamically -->
+            <table id="splitAmountTable" class="table">
+                <thead>
+                    <tr>
+                        <th>Member</th>
+                        <th>Split Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Split amount rows will be added dynamically -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <!-- Add Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="../script.js"></script>
+</body>
+
+</html>

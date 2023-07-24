@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="./FontAwesome files/fontawesome.css" />
+  <script src="./FontAwesome files/fontawesome.js"></script>
+  <title>My Expense Buddy</title>
+  <style>
+    /* Styles for the cards */
+    .card-container {
+      display: flex;
+      justify-content: center;
+      /* Centers the cards horizontally */
+      flex-wrap: wrap;
+      /* Allows the cards to wrap to a new line if the container is not wide enough */
+      gap: 20px;
+      /* Adds some spacing between the cards */
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 40px;
+      width: 200px;
+      box-shadow: 15px 10px 10px rgba(236, 87, 12, 0.1);
+      margin-top: 50px;
+    }
+
+    /* Additional styling for card content */
+    .card h2 {
+      font-size: 18px;
+      margin: 40px;
+      color: black;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #542dcb;
+      font-weight: bolder;
+    }
+
+    .card img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* Media queries for responsiveness */
+    @media (max-width: 768px) {
+      .card {
+        width: 100%;
+        /* Adjusts the card width to take up the full container width on smaller screens */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        width: 100%;
+        /* Further adjusts the card width on even smaller screens */
+      }
+    }
+  </style>
+  <!-- Include Typed.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <img src="../images/logo.png" alt="Logo" style="width: 120px; height: 130px;">
+      <span class="fab fa-github"></span>
+      <h1>My Expense Buddy</h1>
+    </div>
+    <span class="fas fa-bars" id="menuIcon" onclick="toggle()"></span>
+    <div class="navbar" id="nav">
+  
+      <ul>
+        <li>
+          <span class="fas fa-home" id="headIcon"></span>
+          <a href="../index.html"> Home </a>
+        </li>
+        <li>
+          <span class="fas fa-sign-out" id="headIcon"></span>
+          <a href="../pages/login.html"> SignIn </a>
+        </li>
+        <li>
+          <span class="fas fa-sign-out" id="headIcon"></span>
+          <a href="../pages/createaccount.html"> Create Account </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Container for the cards -->
+  <div class="card-container">
+    <!-- Card 1 -->
+    <div class="card">
+      <img src="../images/6.jpg" alt="Image 1">
+      <h2>1. Expense Tracking:</h2>
+      <p id="card1-text">
+        <!-- Initial content -->
+      </p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <img src="../images/9.png" alt="Image 2">
+      <h2>2. Group Management:</h2>
+      <p id="card2-text">
+        <!-- Initial content -->
+      </p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <img src="../images/7.jpg" alt="Image 2">
+      <h2>3. Reports and Calculations:</h2>
+      <p id="card3-text">
+        <!-- Initial content -->
+      </p>
+    </div>
+  </div>
+
+  <!-- Initialize Typed.js for the paragraphs -->
+  <script>
+    // Create arrays of strings for each card
+    const card1TextStrings = [
+      "• Users can enter details for each expense, including the description, amount, paid-by, and group.",
+      "• The application will store the expenses in the database and associate them with the respective groups.",
+      "• Users can view and filter the expenses based on groups."
+    ];
+
+    const card2TextStrings = [
+      "• Users can create new groups by providing a group name.",
+      "• Existing groups will be displayed in a list, showing the group name.",
+      "• Users can add new members to a group."
+    ];
+
+    const card3TextStrings = [
+      "• The application will calculate and display the total expenses for each group.",
+      "• Users can view expense reports for individual groups, showing the expenses and the amount owed by each member.",
+      "• The application will generate summary reports for all groups, providing an overview of the expenses."
+    ];
+
+    // Initialize Typed.js instances for each card
+    const card1Text = new Typed("#card1-text", {
+      strings: card1TextStrings,
+      typeSpeed: 30,
+      showCursor: false,
+      loop: true
+    });
+
+    const card2Text = new Typed("#card2-text", {
+      strings: card2TextStrings,
+      typeSpeed: 30,
+      showCursor: false,
+      loop: true
+    });
+
+    const card3Text = new Typed("#card3-text", {
+      strings: card3TextStrings,
+      typeSpeed: 30,
+      showCursor: false,
+      loop: true
+    });
+  </script>
+
+  <script src="scripts.js"></script>
+  <script>
+    const toggle = () => {
+      document.getElementById("nav").classList.toggle("navactive");
+    };
+
+    function signout() {
+      // Clear any user data or perform other necessary signout logic
+      // For example, you can remove the authentication token or clear local storage
+      alert("You have been signed out successfully.");
+      // Redirect to the login page or any other desired page
+      window.location.href = "http://127.0.0.1:5500/my-expense-buddy/login.html";
+    }
+  </script>
+</body>
+
+</html>
