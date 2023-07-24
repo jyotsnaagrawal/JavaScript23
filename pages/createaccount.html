@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Sign Up</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #000;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .intro-section {
+        text-align: center;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+      }
+
+      .intro-section h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .intro-section p {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .intro-section input[type="text"],
+      .intro-section input[type="email"],
+      .intro-section input[type="password"] {
+        width: 70%;
+        padding: 6px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 5px solid #1a1616;
+        font-size: 20px;
+      }
+
+      .create-account {
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .create-account:hover {
+        background-color: #327ae0;
+      }
+
+      .intro-section a {
+        color: #4285f4;
+        text-decoration: none;
+      }
+
+      @media screen and (max-width: 500px) {
+        .intro-section {
+          padding: 10px;
+        }
+
+        .intro-section h2 {
+          font-size: 20px;
+        }
+
+        .intro-section p {
+          font-size: 14px;
+        }
+
+        .intro-section input[type="text"],
+        .intro-section input[type="email"],
+        .intro-section input[type="password"] {
+          font-size: 14px;
+        }
+
+        .create-account {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="intro-section">
+      <h2>INTRODUCE YOURSELF</h2>
+      <p>Hi there! My name is</p>
+      <input type="text" id="name-input" placeholder="Enter your name" />
+      <p>Here’s my email address:</p>
+      <input
+        type="email"
+        id="email-input"
+        placeholder="Enter your email address"
+      />
+      <p>And here’s my password:</p>
+      <input
+        type="password"
+        id="password-input"
+        placeholder="Enter your password"
+      />
+      <button class="create-account">Create Account</button>
+      <p>By signing up, you accept the My Expense Buddy Terms of Service.</p>
+    </div>
+
+    <script>
+      // Add event listener to the "Create Account" button
+      document
+        .querySelector(".create-account")
+        .addEventListener("click", function (event) {
+          var nameInput = document.getElementById("name-input");
+          var emailInput = document.getElementById("email-input");
+          var passwordInput = document.getElementById("password-input");
+
+          var name = nameInput.value;
+          var email = emailInput.value;
+          var password = passwordInput.value;
+
+          // Validate email format using regular expression
+          var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            event.preventDefault(); // Prevent the form from submitting
+            return;
+          }
+
+          if (name && email && password) {
+            var userData = {
+              name: name,
+              email: email,
+              password: password,
+            };
+
+            var storedData = localStorage.getItem("userData");
+            if (storedData) {
+              var existingData = JSON.parse(storedData);
+              if (existingData.email === email) {
+                alert("Data already exists for the provided email address.");
+                return;
+              }
+            }
+
+            localStorage.setItem("userData", JSON.stringify(userData));
+            alert(
+              "Account created successfully! You can now sign in with your credentials."
+            );
+            window.location.href = "login.html"; // Redirect to the login page
+          } else {
+            alert("Please fill in all the fields.");
+            event.preventDefault(); // Prevent the form from submitting
+          }
+        });
+    </script>
+  </body>
+</html>

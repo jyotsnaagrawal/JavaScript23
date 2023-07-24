@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Group</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #000;
+            color: #070101;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 28px;
+           
+        }
+
+        .container {
+            margin-top: 20px;
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border: 3px solid #151414;
+            border-radius: 5px;
+        }
+
+        .container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 5px solid black;
+        }
+
+        .container button {
+            width: 100%;
+            padding: 10px 20px;
+            background-color: #3c3ce3;
+            color: rgb(244, 243, 248);
+            border: none;
+            border-radius: 13px;
+            cursor: pointer;
+        }
+
+        #messageBox {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Create New Group</h1>
+        <div class="form-group">
+            <label for="groupNameInput">My group name is:</label>
+            <input type="text" class="form-control" id="groupNameInput" placeholder="Enter group name">
+        </div>
+        <button class="btn btn-primary" onclick="saveGroup()">Save</button>
+    </div>
+
+    <div id="messageBox">
+        <p id="groupCreatedMessage"></p>
+    </div>
+
+    <script>
+        function saveGroup() {
+            var groupNameInput = document.getElementById("groupNameInput");
+            var groupName = groupNameInput.value;
+
+            // Retrieve the stored group names from local storage
+            var storedGroupNames = JSON.parse(localStorage.getItem("groupNames")) || [];
+
+            // Check if the group name already exists
+            var groupExists = storedGroupNames.some(function (group) {
+                return group.name === groupName;
+            });
+
+            if (groupExists) {
+                alert("Group name already exists. Please choose a different name.");
+                return;
+            }
+
+            // Add the new group name to the array of group names
+            storedGroupNames.push({ name: groupName, persons: [] });
+
+            // Store the updated group names array in local storage
+            localStorage.setItem("groupNames", JSON.stringify(storedGroupNames));
+
+            // Display the message box
+            var messageBox = document.getElementById("messageBox");
+            var groupCreatedMessage = document.getElementById("groupCreatedMessage");
+            groupCreatedMessage.textContent = "Group with name '" + groupName + "' has been created.";
+            messageBox.style.display = "block";
+
+            // Clear the input field
+            groupNameInput.value = "";
+
+            // Redirect to the "Manage Group" window after 2 seconds
+            setTimeout(function () {
+                window.location.href = "manage_group_list.html";
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>
